@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv bashio
+
+mkdir -p /share/hanode
+cd /share/hanode
+
+# Example: Access Home Assistant API
+API_URL=$(bashio::api.supervisor.info | jq -r '.api_url')
+TOKEN=$(bashio::config 'access_token')
+
+echo $API_URL
+
+if [ -z "$TOKEN" ]; then
+    bashio::log.error "No access token provided in the configuration."
+    exit 1
+fi
+
+# Example API call to get Home Assistant states
+curl -s -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" "$API_URL/states" > /share/hanode/states.json
+
+bashio::log.info "Fetched Home Assistant states and saved to /share/hanode/states.json"
+
+./run.sh

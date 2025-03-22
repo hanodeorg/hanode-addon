@@ -1,0 +1,20 @@
+name: Hanode Add-on
+version: "1.0.0"
+slug: hanode
+description: Hanode Add-on
+url: "https://github.com/home-assistant/addons-example/tree/main/example"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+map:
+  - share:rw
+options:
+  hass_url: "http://10.0.4.10:8123"
+  access_token: "???"
+schema:
+  hass_url: "str"
+  access_token: "password"
