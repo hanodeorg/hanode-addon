@@ -1,6 +1,6 @@
 # Hanode Add-on for Home Assistant
 
-_Code your automations with NodeJS inside Home Assistant._
+_Write automations in Typescript and RxJS._
 
 ![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]

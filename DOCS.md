@@ -1,10 +1,21 @@
 # Hanode Add-on for Home Assistant
 
+Hanode documentation: https://hanode.org
+
 ## How to use
 
-This add-on really does nothing. It is just an example.
+## License
 
-When started it will print the configured message or "Hello world" in the log.
+Copyright (c) 2025 Stefano Masini
 
-It will also print "All done!" in `/share/example_addon_output.txt` to show
-simple example of the usage of `map` in addon config.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

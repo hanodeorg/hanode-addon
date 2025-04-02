@@ -5,7 +5,7 @@ cd /share/hanode
 
 # Example: Access Home Assistant API
 API_URL=$(bashio::api.supervisor.info | jq -r '.api_url')
-TOKEN=$(bashio::config 'access_token')
+TOKEN=$(bashio::config 'home_assistant_access_token')
 
 echo $API_URL
 
