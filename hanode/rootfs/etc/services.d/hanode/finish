@@ -1,0 +1,69 @@
+#!/usr/bin/env bashio
+# ==============================================================================
+# Take down the S6 supervision tree when program fails
+# s6-overlay docs: https://github.com/just-containers/s6-overlay
+# ==============================================================================
+
+declare APP_EXIT_CODE=${1}
+
+if [[ "${APP_EXIT_CODE}" -ne 0 ]] && [[ "${APP_EXIT_CODE}" -ne 256 ]]; then
+  bashio::log.warning "Hanode add-on exited with code ${APP_EXIT_CODE}"
+  echo "${APP_EXIT_CODE}" > /run/s6-linux-init-container-results/exitcode
+  exec /run/s6/basedir/bin/halt
+else
+  bashio::log.info "Hanode service restarting after termination."
+fi
+
+#!/bin/bash
+
+# Create a simplified direct access script that serves the Git repository
+cat > /usr/local/bin/serve-git-repo.sh <<EOF
+#!/bin/bash
+
+# Set content type based on the requested path
+if [[ "\$REQUEST_URI" == */info/refs* ]]; then
+  echo "Content-Type: application/x-git-upload-pack-advertisement"
+elif [[ "\$REQUEST_URI" == */git-upload-pack ]]; then
+  echo "Content-Type: application/x-git-upload-pack-result"
+elif [[ "\$REQUEST_URI" == */git-receive-pack ]]; then
+  echo "Content-Type: application/x-git-receive-pack-result"
+else
+  echo "Content-Type: text/plain"
+fi
+echo
+
+# Directly serve the requested Git resource
+REPO_PATH="/home/git/repos/my-hanode-project.git"
+REQUEST_PATH=\$(echo "\$REQUEST_URI" | sed -n 's|^/git/my-hanode-project.git\(.*\)|\1|p')
+
+if [[ "\$REQUEST_URI" == */info/refs* ]]; then
+  if [[ "\$QUERY_STRING" == *"service=git-upload-pack"* ]]; then
+    echo "001e# service=git-upload-pack"
+    echo "0000"
+    cd \$REPO_PATH && git upload-pack --advertise-refs .
+  elif [[ "\$QUERY_STRING" == *"service=git-receive-pack"* ]]; then
+    echo "001f# service=git-receive-pack"
+    echo "0000"
+    cd \$REPO_PATH && git receive-pack --advertise-refs .
+  else
+    cat \$REPO_PATH/info/refs
+  fi
+elif [[ "\$REQUEST_URI" == */git-upload-pack ]]; then
+  cd \$REPO_PATH && git upload-pack --stateless-rpc .
+elif [[ "\$REQUEST_URI" == */git-receive-pack ]]; then
+  cd \$REPO_PATH && git receive-pack --stateless-rpc .
+else
+  echo "Git repository access"
+fi
+EOF
+chmod +x /usr/local/bin/serve-git-repo.sh
+
+# Add direct serving of Git repository
+cat >> /etc/lighttpd/lighttpd.conf <<EOF
+
+# Direct access to Git repository via custom script
+\$HTTP["url"] =~ "^/git/my-hanode-project.git" {
+  cgi.assign = ( "" => "/usr/local/bin/serve-git-repo.sh" )
+}
+EOF
+

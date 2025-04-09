@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Hanode service starting..."
+
+# Set git environment variables globally
+export GIT_PROJECT_ROOT=/home/git/repos
+export GIT_HTTP_EXPORT_ALL=1
+
+# Set proper permissions
+mkdir -p /home/git/repos
+mkdir -p /var/www/hanode-app
+chown -R git:git /home/git/repos
+chown -R git:git /var/www
+chmod -R 755 /home/git/repos
+
+# Start the Node.js git server
+cd /app
+bashio::log.info "Starting Node.js git HTTP server..."
+exec node server.js

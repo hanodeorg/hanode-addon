@@ -1,0 +1,18 @@
+configuration:
+  home_assistant_url:
+    name: Home Assistant URL
+    description:
+      The URL of your Home Assistant instance. This is used to connect to the
+      Home Assistant API and send events and state changes.
+  home_assistant_access_token:
+    name: Home Assistant Access Token
+    description:
+      The access token for your Home Assistant instance. This is used to
+      authenticate with the Home Assistant API. You can create a new token in
+      your Home Assistant profile page.
+  script_for_errors:
+    name: Script entity ID to call if errors occur
+    description:
+      The entity ID of the script to call if errors occur. This is used to
+      handle errors in your automations. If you don't want to use this
+      feature, leave it empty.
