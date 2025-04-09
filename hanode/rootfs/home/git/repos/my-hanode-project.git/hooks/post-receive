@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Log the hook execution
-echo "Post-receive hook triggered at $(date)" >> /tmp/git-hook.log
+echo "Post-receive hook triggered at $(date)"
 
 # Get the work tree directory
 GIT_WORK_TREE="/var/www/hanode-app"
@@ -10,22 +10,22 @@ mkdir -p "$GIT_WORK_TREE"
 # Read the ref updates from stdin
 while read oldrev newrev refname; do
   branch=$(echo "$refname" | sed -e 's,.*/\(.*\),\1,')
-  echo "Received push to branch: $branch (old: $oldrev new: $newrev)" >> /tmp/git-hook.log
+  echo "Received push to branch: $branch (old: $oldrev new: $newrev)"
 
   # Only deploy if master or main branch was pushed
   if [ "$branch" = "master" ] || [ "$branch" = "main" ] || [ "$branch" = "release" ]; then
-    echo "Deploying $branch branch to $GIT_WORK_TREE" >> /tmp/git-hook.log
+    echo "Deploying $branch branch to $GIT_WORK_TREE"
     git --work-tree="$GIT_WORK_TREE" --git-dir=/home/git/repos/my-hanode-project.git checkout -f "$branch"
 
-    echo "Updating server info" >> /tmp/git-hook.log
+    echo "Updating server info"
     git update-server-info
 
-    echo "Deployment completed successfully" >> /tmp/git-hook.log
+    echo "Deployment completed successfully"
   else
-    echo "Not deploying branch $branch" >> /tmp/git-hook.log
+    echo "Not deploying branch $branch"
   fi
 done
 
-# Ensure the info refs are updated for git-http-backend
+# Ensure the info refs are updated
 cd /home/git/repos/my-hanode-project.git
 git update-server-info
