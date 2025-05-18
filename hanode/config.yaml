@@ -1,5 +1,5 @@
 name: Hanode Add-on
-version: "0.0.50"
+version: "0.0.59"
 slug: hanode
 description: Write automations in Typescript and RxJS
 url: "https://github.com/hanodeorg/hanode-addon"
@@ -15,12 +15,10 @@ map:
   - share:rw
 options:
   home_assistant_url: ""
-  home_assistant_access_token: "???"
-  script_for_errors: ""
+  home_assistant_access_token: ""
 schema:
   home_assistant_url: "str"
   home_assistant_access_token: "password"
-  script_for_errors: "str?"
+webui: http://[HOST]:[PORT:3003]/
 ports:
-  80/tcp: 7622
-  22/tcp: 7623
+  3003/tcp: 3003

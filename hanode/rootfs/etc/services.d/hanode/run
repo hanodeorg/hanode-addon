@@ -1,19 +1,10 @@
 #!/usr/bin/with-contenv bashio
+set -o pipefail
 
-bashio::log.info "Hanode service starting..."
+bashio::log.info "Hanode: setting up project and dependencies"
 
-# Set git environment variables globally
-export GIT_PROJECT_ROOT=/home/git/repos
-export GIT_HTTP_EXPORT_ALL=1
+cd /monitor
+node dist/index.js /share/hanode /workdir
+bashio::log.info "Hanode: starting project"
 
-# Set proper permissions
-mkdir -p /home/git/repos
-mkdir -p /var/www/hanode-app
-chown -R git:git /home/git/repos
-chown -R git:git /var/www
-chmod -R 755 /home/git/repos
-
-# Start the Node.js git server
-cd /app
-bashio::log.info "Starting Node.js git HTTP server..."
-exec node server.js
+exec /workdir/run-hanode-project.sh
