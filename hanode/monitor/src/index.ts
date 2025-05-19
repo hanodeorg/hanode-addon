@@ -12,6 +12,9 @@ async function main() {
     if (!fs.existsSync(configPath)) {
         throw new Error(`Config file not found: ${configPath}`);
     }
+    if (!fs.existsSync(srcDir)) {
+        fs.mkdirSync(srcDir, { recursive: true });
+    }
     if (!fs.existsSync(destDir)) {
         fs.mkdirSync(destDir, { recursive: true });
     }
@@ -58,11 +61,7 @@ class ProjectBundle {
     private destProjectPath: string;
     private gitIgnorePath: string;
 
-    constructor(
-        configDir: string,
-        destDir: string,
-        private config: ConfigProject,
-    ) {
+    constructor(configDir: string, destDir: string, private config: ConfigProject) {
         this.srcProjectPath = path.resolve(configDir, config.path);
         this.destProjectPath = path.resolve(destDir, config.path);
         this.gitIgnorePath = path.join(this.srcProjectPath, '.gitignore');
