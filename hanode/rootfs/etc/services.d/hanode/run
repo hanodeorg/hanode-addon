@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bashio
+set -o pipefail
+
+bashio::log.info "Hanode: setting up project and dependencies"
+
+cd /monitor
+node dist/index.js /share/hanode /workdir
+bashio::log.info "Hanode: starting project"
+
+exec /workdir/run-hanode-project.sh

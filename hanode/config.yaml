@@ -1,0 +1,24 @@
+name: Hanode Add-on
+version: "0.0.59"
+slug: hanode
+description: Write automations in Typescript and RxJS
+url: "https://github.com/hanodeorg/hanode-addon"
+# image: "ghcr.io/hanodeorg/image-{arch}-hanode-addon"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+map:
+  - share:rw
+options:
+  home_assistant_url: ""
+  home_assistant_access_token: ""
+schema:
+  home_assistant_url: "str"
+  home_assistant_access_token: "password"
+webui: http://[HOST]:[PORT:3003]/
+ports:
+  3003/tcp: 3003

@@ -1,24 +1,12 @@
 # Hanode Add-on for Home Assistant
 
-This repository contains the Hanode add-on for Home Assistant.
-
-### [Hanode](./hanode)
+_Write automations in Typescript and RxJS._
 
 ![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]
 ![Supports armhf Architecture][armhf-shield]
 ![Supports armv7 Architecture][armv7-shield]
 ![Supports i386 Architecture][i386-shield]
-
-_Write automations in TypeScript and RxJS for Home Assistant with Git integration._
-
-## About
-
-Hanode allows you to create advanced automations using TypeScript and RxJS. The add-on provides a git repository for version control of your automation scripts.
-
-## Documentation
-
-For more information, see the [documentation](./hanode/DOCS.md).
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
