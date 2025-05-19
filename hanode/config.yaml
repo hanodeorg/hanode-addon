@@ -3,7 +3,7 @@ version: "0.0.59"
 slug: hanode
 description: Write automations in Typescript and RxJS
 url: "https://github.com/hanodeorg/hanode-addon"
-# image: "ghcr.io/hanodeorg/image-{arch}-hanode-addon"
+image: "ghcr.io/hanodeorg/image-{arch}-hanode-addon"
 arch:
   - armhf
   - armv7
