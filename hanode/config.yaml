@@ -1,5 +1,5 @@
 name: Hanode Add-on
-version: "0.0.59"
+version: "0.0.60"
 slug: hanode
 description: Write automations in Typescript and RxJS
 url: "https://github.com/hanodeorg/hanode-addon"
